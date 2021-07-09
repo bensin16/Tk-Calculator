@@ -38,6 +38,8 @@ class CalcSystem():
         """
         # if number is pressed:
         if button_value in range(0, 10):
+            if self.__state == self.ST_AFTEQ:   # if number pushed after equals calculated, reset and start from beginning
+                self.__clear_calculator()   # clear before doing any operations when entering first number
             self.__update_current_value(button_value)
         # elif operation is pressed:
         elif button_value in [self.OP_DIVIDE, self.OP_MINUS, self.OP_MULTIPLY, self.OP_PLUS]:
@@ -59,14 +61,22 @@ class CalcSystem():
         # elif clear is pressed
         elif button_value == self.CLR_ALL:
             # only implementing clear all for now
-            self.__state = self.ST_EFN  # Set all values back to default
-            self.__display_value = 0    
-            self.__current_value = 0   
-            self.__previous_value = 0   
-            self.__operand = None 
+            # Set all values back to default
+            self.__clear_calculator()
 
         # Update display value
         self.__update_display_value()
+
+
+    def __clear_calculator(self):
+        """
+        Reset all values to initial values
+        """
+        self.__state = self.ST_EFN  
+        self.__display_value = 0    
+        self.__current_value = 0   
+        self.__previous_value = 0   
+        self.__operand = None 
 
     def __calculate(self):
         """
@@ -83,7 +93,7 @@ class CalcSystem():
             calculated_value = self.__previous_value + self.__current_value
 
         self.__current_value = calculated_value
-        self.__state = self.ST_EFN  # Update the state to be entering the first number
+        self.__state = self.ST_AFTEQ  # Update the state to be entering the first number
 
     def __update_current_value(self, value):
         self.__current_value *= 10
