@@ -33,19 +33,37 @@ class CalcUI():
         btn_zero = tk.Button(master=frm_buttons, text="0", width=BUTTON_WIDTH, height=BUTTON_HEIGHT, command= lambda: self.handle_button_press(0))
         btn_decimal = tk.Button(master=frm_buttons, text=".", width=BUTTON_WIDTH, height=BUTTON_HEIGHT, command= lambda: self.handle_button_press("."))
 
+        # Initalize arithmetic buttons
+        btn_divide = tk.Button(master=frm_buttons, text="/", command= lambda: self.handle_button_press("/"))
+        btn_minus = tk.Button(master=frm_buttons, text="-", command= lambda: self.handle_button_press("-"))
+        btn_multiply = tk.Button(master=frm_buttons, text="*", command= lambda: self.handle_button_press("*"))
+        btn_plus = tk.Button(master=frm_buttons, text="+", command= lambda: self.handle_button_press("+"))
+        btn_equals = tk.Button(master=frm_buttons, text="=", command= lambda: self.handle_button_press("="))
+
         # place buttons on grid
-        btn_nine.grid(row=1, column=2, sticky="nsew")
-        btn_eight.grid(row=1, column=1, sticky="nsew")
+        # grouped by row from left to right for readability
         btn_seven.grid(row=1, column=0, sticky="nsew")
-        btn_six.grid(row=2, column=2, sticky="nsew")
-        btn_five.grid(row=2, column=1, sticky="nsew")
+        btn_eight.grid(row=1, column=1, sticky="nsew")
+        btn_nine.grid(row=1, column=2, sticky="nsew")
+        btn_divide.grid(row=1, column=3, sticky="nsew")
+
         btn_four.grid(row=2, column=0, sticky="nsew")
-        btn_three.grid(row=3, column=2, sticky="nsew")
-        btn_two.grid(row=3, column=1, sticky="nsew")
+        btn_five.grid(row=2, column=1, sticky="nsew")
+        btn_six.grid(row=2, column=2, sticky="nsew")
+        btn_multiply.grid(row=2, column=3, sticky="nsew")
+
         btn_one.grid(row=3, column=0, sticky="nsew")
+        btn_two.grid(row=3, column=1, sticky="nsew")
+        btn_three.grid(row=3, column=2, sticky="nsew")
+        btn_minus.grid(row=3, column=3, sticky="nsew")
+
         btn_plus_minus.grid(row=4, column=0, sticky="nsew")
         btn_zero.grid(row=4, column=1, sticky="nsew")
         btn_decimal.grid(row=4, column=2, sticky="nsew")
+        btn_plus.grid(row=4, column=3, sticky="nsew")
+
+        btn_equals.grid(row=5, column=0, columnspan=4, sticky="nsew")
+
 
         # Pack display label and buttons 
         self.lbl_display.pack()
