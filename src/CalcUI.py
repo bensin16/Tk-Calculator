@@ -42,6 +42,8 @@ class CalcUI():
         btn_multiply = tk.Button(master=frm_buttons, text="*", command= lambda: self.handle_button_press(cs.OP_MULTIPLY))
         btn_plus = tk.Button(master=frm_buttons, text="+", command= lambda: self.handle_button_press(cs.OP_PLUS))
         btn_equals = tk.Button(master=frm_buttons, text="=", command= lambda: self.handle_button_press(cs.OP_EQUALS))
+        btn_exp = tk.Button(master=frm_buttons, text="^", command= lambda: self.handle_button_press(cs.OP_EXP))
+
 
         # Initalize Clear buttons
         btn_clear = tk.Button(master=frm_buttons, text="C", command= lambda: self.handle_button_press(cs.CLR_ALL))
@@ -50,6 +52,7 @@ class CalcUI():
 
         # place buttons on grid
         # grouped by row from left to right for readability
+        btn_exp.grid(row=0, column=0, sticky="nsew")
         btn_clear.grid(row=0, column=1, sticky="nsew")
         btn_clear_entry.grid(row=0, column=2, sticky="nsew")
         btn_delete.grid(row=0, column=3, sticky="nsew")

@@ -8,6 +8,7 @@ class CalcSystem():
     OP_MINUS = "-"
     OP_MULTIPLY = "*"
     OP_PLUS = "+"
+    OP_EXP = "^"
 
     # Constants for values that aren't numbers
     VL_PLUSMINUS = "+/-"
@@ -28,7 +29,7 @@ class CalcSystem():
     def __init__(self):
         self.__state = self.ST_EFN  # State of the calculator 
         self.__display_value = 0    # Value shown on the display of the calculator
-        self.__current_value = 0   # Current number being constructed 
+        self.__current_value = 0    # Current number being constructed 
         self.__previous_value = 0   # Value to be "operated on" by current value and operand
         self.__operand = None       # Operation to perform on current value and previous value
 
@@ -41,8 +42,10 @@ class CalcSystem():
             if self.__state == self.ST_AFTEQ:   # if number pushed after equals calculated, reset and start from beginning
                 self.__clear_calculator()   # clear before doing any operations when entering first number
             self.__update_current_value(button_value)
+        elif button_value == self.VL_PLUSMINUS: # if plus minus is hit, switch to opposite sign
+            self.__current_value *= -1
         # elif operation is pressed:
-        elif button_value in [self.OP_DIVIDE, self.OP_MINUS, self.OP_MULTIPLY, self.OP_PLUS]:
+        elif button_value in [self.OP_DIVIDE, self.OP_EXP, self.OP_MINUS, self.OP_MULTIPLY, self.OP_PLUS]:
             if self.__state == self.ST_ESN:
                 # if entering second number, calculate what was in calculator then continue
                 self.__calculate()
@@ -67,7 +70,6 @@ class CalcSystem():
         # Update display value
         self.__update_display_value()
 
-
     def __clear_calculator(self):
         """
         Reset all values to initial values
@@ -91,9 +93,38 @@ class CalcSystem():
             calculated_value = self.__previous_value * self.__current_value
         elif self.__operand == self.OP_PLUS:
             calculated_value = self.__previous_value + self.__current_value
+        elif self.__operand == self.OP_EXP:
+            calculated_value = self.__calculate_power(self.__previous_value, self.__current_value)
 
         self.__current_value = calculated_value
         self.__state = self.ST_AFTEQ  # Update the state to be entering the first number
+
+    def calculate_power(self, base, exponent):
+        """
+        2 ^ 2 = 4
+        2 ^ 3 = 8
+        """
+        calculated_value = 1
+
+        # return 1 if exponent is 0
+        if exponent == 0:
+            return 1
+
+        # return 0 if the base is 0 to bypass unnecessary calculations
+        if base == 0:
+            return 0
+
+        #if exponent is negative
+        for i in range(abs(exponent)):
+            calculated_value *= base
+
+        # if exp is negative
+        if exponent < 0:
+            # answer is going to be 1 / base^exp
+            calculated_value = 1 / calculated_value
+
+        return calculated_value
+
 
     def __update_current_value(self, value):
         self.__current_value *= 10
